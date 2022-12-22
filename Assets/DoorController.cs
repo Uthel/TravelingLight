@@ -10,15 +10,12 @@ public class DoorController : MonoBehaviour
 
     public InventoryItem requiredKey;
 
-    public bool isMoving;
+    bool isMoving;
     float door1OpenPos = 1.2f;
     float door2OpenPos = -3.2f;
     float door1ClosePos;
     float door2ClosePos;
 
-    public AudioSource doorSoundSource;
-    public AudioClip openSound;
-    public AudioClip closeSound;
 
 
     private void Start()
