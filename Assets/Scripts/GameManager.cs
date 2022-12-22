@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
             voicePlayer.clip = voiceClip;
             voicePlayer.Play();
         }
-
+        // make it bounce a little first
         crosshair.sprite = crosshairMain;
         crosshair.transform.DOScale(Vector3.one * 0.1f, 0.2f);
         DOTween.Sequence()
