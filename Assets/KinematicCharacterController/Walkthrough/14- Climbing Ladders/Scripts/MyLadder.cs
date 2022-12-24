@@ -13,12 +13,15 @@ using UnityEngine;
         public Transform BottomReleasePoint;
         public Transform TopReleasePoint;
 
+    public Transform topAnchor;
+    public Transform bottomAnchor;
+
         // Gets the position of the bottom point of the ladder segment
         public Vector3 BottomAnchorPoint
         {
             get
             {
-                return transform.position + transform.TransformVector(LadderSegmentBottom);
+            return bottomAnchor.position;// + transform.TransformVector(LadderSegmentBottom);
             }
         }
 
@@ -27,7 +30,7 @@ using UnityEngine;
         {
             get
             {
-                return transform.position + transform.TransformVector(LadderSegmentBottom) + (transform.up * LadderSegmentLength);
+            return topAnchor.position;// + transform.TransformVector(LadderSegmentBottom) + (transform.up * LadderSegmentLength);
             }
         }
 

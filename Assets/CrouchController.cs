@@ -13,24 +13,29 @@ namespace KinematicCharacterController
         public MyCharacterController charControl;
 
         public float currentHeight;
-        void Crouch()
+
+        public bool tubeMode = false;
+        public void Crouch()
         {
-            DOTween.To(() => currentHeight, x => currentHeight = x, 1, 0.5f)
+            DOTween.To(() => currentHeight, x => currentHeight = x, 0.7f, 0.5f)
                 .OnUpdate(() =>
                  {
                      kinCon.SetCapsuleDimensions(kinCon.CapsuleRadius, currentHeight, kinCon.CapsuleYOffset);
                  });
-            charControl.MaxStableMoveSpeed = 3;
+            charControl.MaxStableMoveSpeed = 2;
         }
 
-        void UnCrouch()
+        public void UnCrouch()
         {
-            DOTween.To(() => currentHeight, x => currentHeight = x, 2, 0.5f)
-                .OnUpdate(() =>
-                        {
-                            kinCon.SetCapsuleDimensions(kinCon.CapsuleRadius, currentHeight, kinCon.CapsuleYOffset);
-                        });
-            charControl.MaxStableMoveSpeed = 5;
+            if (!tubeMode)
+            {
+                DOTween.To(() => currentHeight, x => currentHeight = x, 2, 0.5f)
+                    .OnUpdate(() =>
+                            {
+                                kinCon.SetCapsuleDimensions(kinCon.CapsuleRadius, currentHeight, kinCon.CapsuleYOffset);
+                            });
+                charControl.MaxStableMoveSpeed = 5;
+            }
         }
 
         private void Update()
