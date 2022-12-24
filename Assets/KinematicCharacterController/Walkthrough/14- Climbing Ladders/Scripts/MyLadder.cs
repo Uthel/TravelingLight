@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KinematicCharacterController.Walkthrough.ClimbingLadders
-{
+
     public class MyLadder : MonoBehaviour
     {
         // Ladder segment
@@ -68,4 +67,3 @@ namespace KinematicCharacterController.Walkthrough.ClimbingLadders
             Gizmos.DrawLine(BottomAnchorPoint, TopAnchorPoint);
         }
     }
-}

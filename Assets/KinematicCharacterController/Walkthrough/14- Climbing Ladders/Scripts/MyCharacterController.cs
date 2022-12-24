@@ -4,8 +4,7 @@ using UnityEngine;
 using KinematicCharacterController;
 using System;
 
-namespace KinematicCharacterController.Walkthrough.ClimbingLadders
-{
+
     public enum CharacterState
     {
         Default,
@@ -601,4 +600,3 @@ namespace KinematicCharacterController.Walkthrough.ClimbingLadders
         {
         }
     }
-}
