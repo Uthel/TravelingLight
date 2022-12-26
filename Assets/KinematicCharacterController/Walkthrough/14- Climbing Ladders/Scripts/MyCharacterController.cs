@@ -239,14 +239,14 @@ using System;
                         // Crouching input
                         if (inputs.CrouchDown)
                         {
-                            _shouldBeCrouching = true;
+                            //_shouldBeCrouching = true;
 
-                            if (!_isCrouching)
-                            {
-                                _isCrouching = true;
-                                Motor.SetCapsuleDimensions(0.5f, 1f, 0.5f);
-                                MeshRoot.localScale = new Vector3(1f, 0.5f, 1f);
-                            }
+                            //if (!_isCrouching)
+                            //{
+                            //    _isCrouching = true;
+                            //    Motor.SetCapsuleDimensions(0.5f, 1f, 0.5f);
+                            //    MeshRoot.localScale = new Vector3(1f, 0.5f, 1f);
+                            //}
                         }
                         else if (inputs.CrouchUp)
                         {
