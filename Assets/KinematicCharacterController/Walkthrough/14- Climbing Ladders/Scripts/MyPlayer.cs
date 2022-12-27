@@ -12,6 +12,7 @@ namespace KinematicCharacterController.Walkthrough.ClimbingLadders
         public ExampleCharacterCamera OrbitCamera;
         public Transform CameraFollowPoint;
         public MyCharacterController Character;
+        public UIManager uiControl;
 
         private const string MouseXInput = "Mouse X";
         private const string MouseYInput = "Mouse Y";
@@ -35,6 +36,7 @@ namespace KinematicCharacterController.Walkthrough.ClimbingLadders
         {
             if (Input.GetMouseButtonDown(0))
             {
+                if (!uiControl.isPaused)
                 Cursor.lockState = CursorLockMode.Locked;
             }
 

@@ -18,6 +18,7 @@ using System;
         DeAnchoring
     }
 
+
     public struct PlayerCharacterInputs
     {
         public float MoveAxisForward;
@@ -32,6 +33,7 @@ using System;
     public class MyCharacterController : MonoBehaviour, ICharacterController
     {
         public KinematicCharacterMotor Motor;
+        public UIManager uiControl;
 
         [Header("Stable Movement")]
         public float MaxStableMoveSpeed = 10f;
@@ -225,15 +227,21 @@ using System;
             {
                 case CharacterState.Default:
                     {
-                        // Move and look inputs
+                    // Move and look inputs
+                    if (!uiControl.isPaused)
+                    {
                         _moveInputVector = cameraPlanarRotation * moveInputVector;
                         _lookInputVector = cameraPlanarDirection;
+                    }
 
                         // Jumping input
                         if (inputs.JumpDown)
                         {
+                        if (!uiControl.isPaused)
+                        {
                             _timeSinceJumpRequested = 0f;
                             _jumpRequested = true;
+                        }
                         }
 
                         // Crouching input
