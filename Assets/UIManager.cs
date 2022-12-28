@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using Cinemachine;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,9 +15,18 @@ public class UIManager : MonoBehaviour
 
     public bool isPaused = false;
 
+    public CamSwapper camSwapper;
+    public CinemachineVirtualCamera pauseCam;
+    public GameObject pausePlanet;
+
 
     public void OpenPauseMenu()
     {
+        //camSwapper.cineBrain.m_DefaultBlend = 
+        pauseCam.Priority = 10;
+        camSwapper.SwapToMainMenuCam();
+        pausePlanet.SetActive(true);
+        
         isPaused = true;
         wipeControl.StartTheWipe();
         Cursor.lockState = CursorLockMode.None;
@@ -34,13 +44,16 @@ public class UIManager : MonoBehaviour
 
     public void ClosePauseMenu()
     {
+        camSwapper.SwapToPlayerCam();
+        pauseCam.Priority = 0;
+        pausePlanet.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         wipeControl.UndoTheWipe();
         pauseMenuGroup.blocksRaycasts = false;
         pauseMenuGroup.interactable = false;
         DOTween.Sequence()
-            .Append(pauseMenuGroup.DOFade(0, 0.6f))
+            .Append(pauseMenuGroup.DOFade(0, 0.1f))
             .AppendCallback(() =>
             {
                 isPaused = false;

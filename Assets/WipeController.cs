@@ -14,6 +14,7 @@ public class WipeController : MonoBehaviour
     public Sprite wipe1;
 
     public bool wiping = false;
+    public Ease easing;
 
 
     private void Start()
@@ -26,8 +27,8 @@ public class WipeController : MonoBehaviour
         {
             wiping = true;
             DOTween.Sequence()
-                        .Append(wipeGroup.DOFade(1, 1))
-                        .Join(wipeTransform.DOLocalMoveY(1100, 1).SetEase(Ease.OutSine))
+                        .Append(wipeGroup.DOFade(0.3f, 1))
+                        .Join(wipeTransform.DOLocalMoveY(900, 2).SetEase(easing))
                         .AppendCallback(() => { wiping = false; })
                         ;
         }
@@ -35,7 +36,7 @@ public class WipeController : MonoBehaviour
 
     public void UndoTheWipe()
     {
-
+        wipeGroup.DOFade(0f, 0.5f);
         if (!wiping)
         {
             wiping = true;

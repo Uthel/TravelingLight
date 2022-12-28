@@ -109,7 +109,7 @@ Material:
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
-    - _SGT_Brightness: 0.3
+    - _SGT_Brightness: 1
     - _SGT_ColorInfluence: 10
     - _SGT_DstBlend: 1
     - _SGT_NearDistance: 10000

@@ -10,9 +10,11 @@ public class CamSwapper : MonoBehaviour
     public CinemachineVirtualCamera stationaryCineCam1;
     public CinemachineVirtualCamera stationaryCineCam2;
     public CinemachineVirtualCamera stationaryCineCam3;
+    public CinemachineVirtualCamera pauseCam;
 
     public Camera playerControllerCam;
     public Camera cinemachineMasterCam;
+    public CinemachineBrain cineBrain;
 
     public void SwapToCinemachineCam()
     {
@@ -22,6 +24,18 @@ public class CamSwapper : MonoBehaviour
         stationaryCineCam2.Priority = 0;
         stationaryCineCam1.Priority = 10;
         playerCineCam.Priority = 0;
+    }
+
+    public void SwapToMainMenuCam()
+    {
+        pauseCam.Priority = 10;
+        stationaryCineCam2.Priority = 0;
+        stationaryCineCam1.Priority = 0;
+        playerCineCam.Priority = 0;
+        playerControllerCam.enabled = false;
+        cinemachineMasterCam.enabled = true;
+        //stationaryCineCam3.Priority = 0;
+
     }
 
     public void SwapToPlayerCam()
