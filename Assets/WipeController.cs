@@ -27,7 +27,7 @@ public class WipeController : MonoBehaviour
         {
             wiping = true;
             DOTween.Sequence()
-                        .Append(wipeGroup.DOFade(0.3f, 1))
+                        .Append(wipeGroup.DOFade(0.0f, 1))
                         .Join(wipeTransform.DOLocalMoveY(900, 2).SetEase(easing))
                         .AppendCallback(() => { wiping = false; })
                         ;
