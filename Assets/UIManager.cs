@@ -25,6 +25,15 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI buttonInfoText;
 
+    public Slider masterVolumeSlider;
+    public Slider musicVolumeSlider;
+    public Slider sfxVolumeSlider;
+    public bool audiomuted = true;
+    public bool localMuted = false;
+
+ 
+    
+
 
     public void OpenPauseMenu()
     {
@@ -46,6 +55,23 @@ public class UIManager : MonoBehaviour
 
             })
             ;
+    }
+
+    public void MuteAllAudio(bool audiomuted)
+    {
+        if (!localMuted){
+            masterVolumeSlider.value = -80;
+            musicVolumeSlider.value = -80;
+            sfxVolumeSlider.value = -80;
+            localMuted = true;            
+        }
+        else
+        {
+            masterVolumeSlider.value = 0;
+            musicVolumeSlider.value = 0;
+            sfxVolumeSlider.value = 0;
+            localMuted = false;
+        }
     }
 
     public void ClosePauseMenu()
