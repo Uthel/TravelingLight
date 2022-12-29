@@ -18,7 +18,7 @@ namespace KinematicCharacterController
         private void OnTriggerExit(Collider other)
         {
             crouchControl.UnCrouch();
-            crouchControl.tubeMode = false;
+            //crouchControl.tubeMode = false;
         }
     }
 }

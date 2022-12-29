@@ -30,6 +30,10 @@ public class UIManager : MonoBehaviour
     public Slider sfxVolumeSlider;
     public bool audiomuted = true;
     public bool localMuted = false;
+    public TextMeshProUGUI fpsText;
+
+    public ExampleCharacterCamera playerCam;
+
 
  
     
@@ -72,6 +76,21 @@ public class UIManager : MonoBehaviour
             sfxVolumeSlider.value = 0;
             localMuted = false;
         }
+    }
+
+    public void ToggleFullScreen()
+    {
+        Screen.fullScreen = !Screen.fullScreen;
+    }
+
+    public void ToggleShowFPS()
+    {
+        fpsText.gameObject.SetActive(!fpsText.gameObject.activeSelf);
+    }
+
+    public void InvertYAxis()
+    {
+        playerCam.InvertY = !playerCam.InvertY;
     }
 
     public void ClosePauseMenu()
