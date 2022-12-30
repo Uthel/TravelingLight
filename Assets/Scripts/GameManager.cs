@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 
     public void PickupItem(string message)
     {
+        DOTween.KillAll();
         gameMessageTMPro.text = message;
         crosshair.sprite = crosshairMain;
         crosshair.transform.DOScale(Vector3.one * 0.1f, 0.2f);

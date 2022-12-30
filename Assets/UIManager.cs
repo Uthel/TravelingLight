@@ -140,12 +140,6 @@ public class UIManager : MonoBehaviour
         .AppendCallback(() => { OpenPauseMenu(); })
         .AppendInterval(0.56f)
         .AppendCallback(() => { OpenInventoryWindow(); })
-        //.OnComplete(() => {
-        //    pauseMenuGroup.blocksRaycasts = true;
-        //    pauseMenuGroup.interactable = true;
-        //    inventoryWindow.interactable = true;
-        //    inventoryWindow.blocksRaycasts = true;
-        //})
         ;
     }
 
