@@ -15,8 +15,8 @@ public class StandForcer : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        crouchControl.Crouch();
-        crouchControl.tubeMode = true;
+       // crouchControl.Crouch();
+        //crouchControl.tubeMode = true;
         
 
     }
