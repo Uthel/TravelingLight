@@ -11,11 +11,14 @@ public class Interactable : MonoBehaviour
     public bool canInteract = false;
     public AudioClip voiceClip;
 
+    public GameObject inventoryItemToEnable;
+
     public void Interact()
     {
         if (pickup)
         {           
             gameManager.PickupItem(interactMessage);
+            inventoryItemToEnable.SetActive(true);
             Destroy(gameObject);            
         }
         else if (inspect)
