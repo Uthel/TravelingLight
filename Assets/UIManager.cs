@@ -56,7 +56,6 @@ public class UIManager : MonoBehaviour
             {
                 pauseMenuGroup.blocksRaycasts = true;
                 pauseMenuGroup.interactable = true;
-
             })
             ;
     }
@@ -115,7 +114,7 @@ public class UIManager : MonoBehaviour
 
     public void CloseAllWindows()
     {
-        DOTween.KillAll();
+        //DOTween.KillAll();
         inventoryWindow.interactable = false;
         inventoryWindow.blocksRaycasts = false;
         aboutWindow.interactable = false;
@@ -132,6 +131,22 @@ public class UIManager : MonoBehaviour
         aboutWindow.alpha = 0;
         cardsWindow.alpha = 0;
 
+    }
+
+    public void StraightToInventory()
+    {
+
+        DOTween.Sequence()
+        .AppendCallback(() => { OpenPauseMenu(); })
+        .AppendInterval(0.56f)
+        .AppendCallback(() => { OpenInventoryWindow(); })
+        //.OnComplete(() => {
+        //    pauseMenuGroup.blocksRaycasts = true;
+        //    pauseMenuGroup.interactable = true;
+        //    inventoryWindow.interactable = true;
+        //    inventoryWindow.blocksRaycasts = true;
+        //})
+        ;
     }
 
     public void OpenInventoryWindow()
@@ -187,13 +202,16 @@ public class UIManager : MonoBehaviour
                 ClosePauseMenu();
             }
         }
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    if (isPaused)
-        //    {
-        //        //Cursor.lockState = CursorLockMode.None;
-        //        //Cursor.visible = true;
-        //    }
-        //}
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (!isPaused)
+            {
+                StraightToInventory();
+            }
+            else
+            {
+                ClosePauseMenu();
+            }
+        }
     }
 }
