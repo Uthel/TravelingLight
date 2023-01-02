@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
             .Append(gameMessageGroup.DOFade(0, 0.5f))
             .Join(gameMessageGroup.transform.DOScale(Vector3.one, 0.5f))
             ;
-        
+
     }
 
     public void InspectItem(string message, AudioClip voiceClip)
@@ -65,6 +65,40 @@ public class GameManager : MonoBehaviour
             .Join(gameMessageGroup.transform.DOScale(Vector3.one, 0.5f))
             ;
         currentInteractable = null;
+    }
+
+    public void OpenContainer(Transform container, Vector3 openPos, Interactable interactable)
+    {
+        
+        //DOTween.KillAll();
+        DOTween.Sequence()
+            .Append(container.DOLocalMoveX(openPos.x, 0.7f).SetEase(Ease.OutSine))
+            .OnComplete(() => { interactable.isOpen = true; });
+    }
+
+    public void CloseContainer(Transform container, Vector3 closePos, Interactable interactable)
+    {
+        //DOTween.KillAll();
+        DOTween.Sequence()            
+            .Append(container.DOLocalMoveX(closePos.x, 0.5f))
+            .OnComplete(() => { interactable.isOpen = false; });
+    }
+
+    public void OpenContainerRotate(Transform container, Vector3 openRot, Interactable interactable)
+    {
+
+        //DOTween.KillAll();
+        DOTween.Sequence()
+            .Append(container.DOLocalRotate(openRot, 0.7f).SetEase(Ease.OutSine))
+            .OnComplete(() => { interactable.isOpen = true; });
+    }
+
+    public void CloseContainerRotate(Transform container, Vector3 closeRot, Interactable interactable)
+    {
+        //DOTween.KillAll();
+        DOTween.Sequence()
+            .Append(container.DOLocalRotate(closeRot, 0.5f))
+            .OnComplete(() => { interactable.isOpen = false; });
     }
 
     void ProcessInputs()

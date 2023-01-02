@@ -12,11 +12,11 @@ public class ManipulatorController : MonoBehaviour
         if (other.TryGetComponent<Interactable>(out Interactable interactable))
         {
             if (!interactable.canInteract)
-            { 
+            {
                 interactable.canInteract = true;
                 gameManager.currentInteractable = interactable;
 
-                if (interactable.pickup)
+                if (interactable.pickup || interactable.openClose || interactable.openCloseRotate)
                 {
                     gameManager.crosshair.sprite = gameManager.crosshairHand;
                     gameManager.crosshair.transform.DOScale(Vector3.one * 0.7f, 0.2f);
@@ -27,8 +27,20 @@ public class ManipulatorController : MonoBehaviour
                     Vector3 scaleAmount = new Vector3(0.8f, 0.6f, 0.6f);
                     gameManager.crosshair.transform.DOScale(scaleAmount, 0.2f);
                 }
-
-
+            }
+            else
+            {
+                if (interactable.pickup || interactable.openClose || interactable.openCloseRotate)
+                {
+                    gameManager.crosshair.sprite = gameManager.crosshairHand;
+                    gameManager.crosshair.transform.DOScale(Vector3.one * 0.7f, 0.2f);
+                }
+                else if (interactable.inspect)
+                {
+                    gameManager.crosshair.sprite = gameManager.crosshairEye;
+                    Vector3 scaleAmount = new Vector3(0.8f, 0.6f, 0.6f);
+                    gameManager.crosshair.transform.DOScale(scaleAmount, 0.2f);
+                }
             }
         }
     }
