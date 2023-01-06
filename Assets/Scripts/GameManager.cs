@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         
         //DOTween.KillAll();
         DOTween.Sequence()
-            .Append(container.DOLocalMoveX(openPos.x, 0.7f).SetEase(Ease.OutSine))
+            .Append(container.DOLocalMove(openPos, 0.7f).SetEase(Ease.OutSine))
             .OnComplete(() => { interactable.isOpen = true; });
     }
 
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
     {
         //DOTween.KillAll();
         DOTween.Sequence()            
-            .Append(container.DOLocalMoveX(closePos.x, 0.5f))
+            .Append(container.DOLocalMove(closePos, 0.5f))
             .OnComplete(() => { interactable.isOpen = false; });
     }
 
