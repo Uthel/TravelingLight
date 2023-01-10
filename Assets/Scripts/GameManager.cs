@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     public bool inspecting;
 
+    public GrabController grabControl;
+
     private void Update()
     {
         ProcessInputs();
@@ -30,7 +32,8 @@ public class GameManager : MonoBehaviour
 
     public void PickupItem(string message)
     {
-        DOTween.KillAll();
+        //DOTween.KillAll();
+        grabControl.Grab(currentInteractable.transform);
         gameMessageTMPro.text = message;
         crosshair.sprite = crosshairMain;
         crosshair.transform.DOScale(Vector3.one * 0.1f, 0.2f);

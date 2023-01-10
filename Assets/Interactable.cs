@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Interactable : MonoBehaviour
 {
@@ -41,7 +42,13 @@ public class Interactable : MonoBehaviour
         {           
             gameManager.PickupItem(interactMessage);
             inventoryItemToEnable.SetActive(true);
-            Destroy(gameObject);            
+
+            DOTween.Sequence()
+                .AppendInterval(0.2f)
+                .AppendCallback(() => {
+                    Destroy(gameObject);
+                });
+          
         }
         else if (inspect)
         {
