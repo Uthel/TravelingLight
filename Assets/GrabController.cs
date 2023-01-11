@@ -19,6 +19,7 @@ public class GrabController : MonoBehaviour
         Vector3 grabPos = target.position + new Vector3(0, 0.1f, 0);
         DOTween.Sequence()
             .Append(grabTransform.DOMove(grabPos, 0.2f).SetEase(Ease.InSine))
+            //.AppendInterval(0.05f)
 
             .Append(grabTransform.DOMove(grabEndPos.position, 0.2f).SetEase(Ease.InSine))
             
