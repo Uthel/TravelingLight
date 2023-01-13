@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public Sprite crosshairEye;
     public Image crosshair;
     public AudioSource voicePlayer;
+    public Animator manipulatorAnim;
 
     public bool inspecting;
 
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     public void PickupItem(string message)
     {
         //DOTween.KillAll();
+        manipulatorAnim.Play("manipinout");
         grabControl.Grab(currentInteractable.transform);
         gameMessageTMPro.text = message;
         crosshair.sprite = crosshairMain;
