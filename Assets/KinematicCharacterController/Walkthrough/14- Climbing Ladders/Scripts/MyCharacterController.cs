@@ -336,7 +336,7 @@ using System;
                             // Calculate target velocity
                             Vector3 inputRight = Vector3.Cross(_moveInputVector, Motor.CharacterUp);
                             Vector3 reorientedInput = Vector3.Cross(Motor.GroundingStatus.GroundNormal, inputRight).normalized * _moveInputVector.magnitude;
-                            targetMovementVelocity = reorientedInput * MaxStableMoveSpeed;
+                            targetMovementVelocity = reorientedInput * MaxStableMoveSpeed * 0.5f;
 
                             // Smooth movement Velocity
                             currentVelocity = Vector3.Lerp(currentVelocity, targetMovementVelocity, 1 - Mathf.Exp(-StableMovementSharpness * deltaTime));

@@ -11,30 +11,33 @@ namespace KinematicCharacterController
     {
         public KinematicCharacterMotor kinCon;
         public MyCharacterController charControl;
+        public FullBodyWalkController martinAnimController;
 
         public float currentHeight;
 
         public bool tubeMode = false;
         public void Crouch()
         {
+            martinAnimController.CrouchAnim();
             DOTween.To(() => currentHeight, x => currentHeight = x, 0.7f, 0.5f)
                 .OnUpdate(() =>
                  {
                      kinCon.SetCapsuleDimensions(kinCon.CapsuleRadius, currentHeight, kinCon.CapsuleYOffset);
                  });
-            charControl.MaxStableMoveSpeed = 2;
+            charControl.MaxStableMoveSpeed = 1.3f;
         }
 
         public void UnCrouch()
         {
             if (!tubeMode)
             {
+                martinAnimController.UnCrouchAnim();
                 DOTween.To(() => currentHeight, x => currentHeight = x, 2, 0.5f)
                     .OnUpdate(() =>
                             {
                                 kinCon.SetCapsuleDimensions(kinCon.CapsuleRadius, currentHeight, kinCon.CapsuleYOffset);
                             });
-                charControl.MaxStableMoveSpeed = 5;
+                charControl.MaxStableMoveSpeed = 4;
             }
         }
 
