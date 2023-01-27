@@ -14,6 +14,9 @@ namespace KinematicCharacterController
         public FullBodyWalkController martinAnimController;
 
         public float currentHeight;
+        public float currentCamPosition;
+
+        public Transform camFollowTransform;
 
         public bool tubeMode = false;
         public void Crouch()
@@ -24,6 +27,13 @@ namespace KinematicCharacterController
                  {
                      kinCon.SetCapsuleDimensions(kinCon.CapsuleRadius, currentHeight, kinCon.CapsuleYOffset);
                  });
+
+            DOTween.To(() => currentCamPosition, x => currentCamPosition = x, 1.3f, 0.5f)
+                .OnUpdate(() =>
+                {
+                    camFollowTransform.localPosition = new Vector3(camFollowTransform.localPosition.x, currentCamPosition, camFollowTransform.localPosition.z);
+                });
+
             charControl.MaxStableMoveSpeed = 1.3f;
         }
 
@@ -37,7 +47,14 @@ namespace KinematicCharacterController
                             {
                                 kinCon.SetCapsuleDimensions(kinCon.CapsuleRadius, currentHeight, kinCon.CapsuleYOffset);
                             });
-                charControl.MaxStableMoveSpeed = 4;
+
+                DOTween.To(() => currentCamPosition, x => currentCamPosition = x, 1.632f, 0.5f)
+                    .OnUpdate(() =>
+                            {
+                                camFollowTransform.localPosition = new Vector3(camFollowTransform.localPosition.x, currentCamPosition, camFollowTransform.localPosition.z);
+                            });
+
+                charControl.MaxStableMoveSpeed = 12;
             }
         }
 

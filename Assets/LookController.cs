@@ -10,7 +10,7 @@ public class LookController : MonoBehaviour
     private void Update()
     {
         
-        headbone.LookAt(player);
+        headbone.LookAt(player, Vector3.up);
         //headbone.rotation.SetFromToRotation(transform.right, transform.forward);
     }
 }
