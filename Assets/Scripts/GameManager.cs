@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public Image crosshair;
     public AudioSource voicePlayer;
     public Animator manipulatorAnim;
+    public Animator playerAnim;
 
     public bool inspecting;
 
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         //DOTween.KillAll();
         manipulatorAnim.Play("manipinout");
+        playerAnim.SetTrigger("Grab");
         grabControl.Grab(currentInteractable.transform);
         gameMessageTMPro.text = message;
         crosshair.sprite = crosshairMain;
