@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject martinModelMain;
     public GameObject martinModelCutscene;
+    public GameObject manipulator;
 
     private void Update()
     {
@@ -60,16 +61,18 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void StartInGameCutsceneSimple(CinemachineVirtualCamera vCam)
+    public void StartInGameCutsceneSimple(CinemachineVirtualCamera vCam, Transform martinTransform)
     {
         uiManager.isPaused = true;
         DOTween.Sequence()
             .Append(blackoutGroup.DOFade(1, 0.3f))
-            .AppendCallback(() => { 
-                camSwapper.SwapToDesignatedCam(vCam);
-                crosshair.enabled = false;
-                martinModelMain.SetActive(false);
-                martinModelCutscene.SetActive(true);
+            .AppendCallback(() => 
+            { 
+                camSwapper.SwapToDesignatedCam(vCam);                
+            })
+            .AppendCallback(() =>
+            {
+                SwapCutsceneStuff(martinTransform);
             })
             .AppendInterval(0.1f)
 
@@ -82,6 +85,16 @@ public class GameManager : MonoBehaviour
             ;
     }
 
+    void SwapCutsceneStuff(Transform martinTransform)
+    {
+        crosshair.enabled = false;
+        martinModelMain.SetActive(false);
+        martinModelCutscene.transform.position = martinTransform.position;
+        martinModelCutscene.transform.rotation = martinTransform.rotation;
+        martinModelCutscene.SetActive(true);
+        manipulator.SetActive(false);
+    }
+
     public void EndInGameCutScene()
     {
         
@@ -92,6 +105,7 @@ public class GameManager : MonoBehaviour
                 crosshair.enabled = true;
                 martinModelMain.SetActive(true);
                 martinModelCutscene.SetActive(false);
+                manipulator.SetActive(true);
             })
             .AppendInterval(0.1f)
 

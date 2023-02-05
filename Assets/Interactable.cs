@@ -27,6 +27,7 @@ public class Interactable : MonoBehaviour
     public Vector3 closeRotation;
 
     public CinemachineVirtualCamera cinVCam;
+    public Transform martinTransform;
 
 
     public void Start()
@@ -45,7 +46,7 @@ public class Interactable : MonoBehaviour
 
         if (cutscene)
         {
-            gameManager.StartInGameCutsceneSimple(cinVCam);
+            gameManager.StartInGameCutsceneSimple(cinVCam, martinTransform);
         }
         if (pickup)
         {           

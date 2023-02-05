@@ -54,6 +54,8 @@ using UnityEngine;
 
         private const int MaxObstructions = 32;
 
+    public UIManager uiManager;
+
         void OnValidate()
         {
             DefaultDistance = Mathf.Clamp(DefaultDistance, MinDistance, MaxDistance);
@@ -82,7 +84,7 @@ using UnityEngine;
 
         public void UpdateWithInput(float deltaTime, float zoomInput, Vector3 rotationInput)
         {
-            if (FollowTransform)
+            if (FollowTransform && !uiManager.isPaused)
             {
                 if (InvertX)
                 {
@@ -104,8 +106,10 @@ using UnityEngine;
                 Quaternion verticalRot = Quaternion.Euler(_targetVerticalAngle, 0, 0);
                 Quaternion targetRotation = Quaternion.Slerp(Transform.rotation, planarRot * verticalRot, 1f - Mathf.Exp(-RotationSharpness * deltaTime));
 
-                // Apply rotation
+            // Apply rotation
+
                 Transform.rotation = targetRotation;
+
 
                 // Process distance input
                 if (_distanceIsObstructed && Mathf.Abs(zoomInput) > 0f)
