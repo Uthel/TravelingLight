@@ -19,22 +19,26 @@ namespace KinematicCharacterController
         public Transform camFollowTransform;
 
         public bool tubeMode = false;
+        public UIManager uiManager;
         public void Crouch()
         {
-            martinAnimController.CrouchAnim();
-            DOTween.To(() => currentHeight, x => currentHeight = x, 0.7f, 0.5f)
-                .OnUpdate(() =>
-                 {
-                     kinCon.SetCapsuleDimensions(kinCon.CapsuleRadius, currentHeight, kinCon.CapsuleYOffset);
-                 });
+            if (!uiManager.isPaused)
+            {
+                martinAnimController.CrouchAnim();
+                DOTween.To(() => currentHeight, x => currentHeight = x, 0.7f, 0.5f)
+                    .OnUpdate(() =>
+                     {
+                         kinCon.SetCapsuleDimensions(kinCon.CapsuleRadius, currentHeight, kinCon.CapsuleYOffset);
+                     });
 
-            DOTween.To(() => currentCamPosition, x => currentCamPosition = x, 1.3f, 0.5f)
-                .OnUpdate(() =>
-                {
-                    camFollowTransform.localPosition = new Vector3(camFollowTransform.localPosition.x, currentCamPosition, camFollowTransform.localPosition.z);
-                });
+                DOTween.To(() => currentCamPosition, x => currentCamPosition = x, 1.3f, 0.5f)
+                    .OnUpdate(() =>
+                    {
+                        camFollowTransform.localPosition = new Vector3(camFollowTransform.localPosition.x, currentCamPosition, camFollowTransform.localPosition.z);
+                    });
 
-            charControl.MaxStableMoveSpeed = 1.3f;
+                charControl.MaxStableMoveSpeed = 1.3f;
+            }
         }
 
         public void UnCrouch()
@@ -54,7 +58,7 @@ namespace KinematicCharacterController
                                 camFollowTransform.localPosition = new Vector3(camFollowTransform.localPosition.x, currentCamPosition, camFollowTransform.localPosition.z);
                             });
 
-                charControl.MaxStableMoveSpeed = 12;
+                charControl.MaxStableMoveSpeed = 5;
             }
         }
 

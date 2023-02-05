@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
+using Cinemachine;
 
 
 public class GameManager : MonoBehaviour
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     public PlayerManager player;
     public Interactable currentInteractable;
     public CanvasGroup gameMessageGroup;
+    public CanvasGroup blackoutGroup;
     public TextMeshProUGUI gameMessageTMPro;
     public Sprite crosshairMain;
     public Sprite crosshairHand;
@@ -25,6 +27,12 @@ public class GameManager : MonoBehaviour
     public bool inspecting;
 
     public GrabController grabControl;
+
+    public CamSwapper camSwapper;
+    public UIManager uiManager;
+
+    public GameObject martinModelMain;
+    public GameObject martinModelCutscene;
 
     private void Update()
     {
@@ -50,6 +58,46 @@ public class GameManager : MonoBehaviour
             .Join(gameMessageGroup.transform.DOScale(Vector3.one, 0.5f))
             ;
 
+    }
+
+    public void StartInGameCutsceneSimple(CinemachineVirtualCamera vCam)
+    {
+        uiManager.isPaused = true;
+        DOTween.Sequence()
+            .Append(blackoutGroup.DOFade(1, 0.3f))
+            .AppendCallback(() => { 
+                camSwapper.SwapToDesignatedCam(vCam);
+                crosshair.enabled = false;
+                martinModelMain.SetActive(false);
+                martinModelCutscene.SetActive(true);
+            })
+            .AppendInterval(0.1f)
+
+            .Append(blackoutGroup.DOFade(0, 0.3f))
+            .AppendInterval(5)
+            .AppendCallback(() =>
+            {
+                EndInGameCutScene();
+            })
+            ;
+    }
+
+    public void EndInGameCutScene()
+    {
+        
+        DOTween.Sequence()
+            .Append(blackoutGroup.DOFade(1, 0.3f))
+            .AppendCallback(() => {
+                camSwapper.SwapToPlayerCam();
+                crosshair.enabled = true;
+                martinModelMain.SetActive(true);
+                martinModelCutscene.SetActive(false);
+            })
+            .AppendInterval(0.1f)
+
+            .Append(blackoutGroup.DOFade(0, 0.3f))
+            .OnComplete(() => { uiManager.isPaused = false; })
+            ;
     }
 
     public void InspectItem(string message, AudioClip voiceClip)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Cinemachine;
 
 public class Interactable : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Interactable : MonoBehaviour
     public bool inspect;
     public bool openClose;
     public bool openCloseRotate;
+    public bool cutscene;
     public BoxCollider hiddenItemCollider;
     public string interactMessage;
     public bool canInteract = false;
@@ -23,6 +25,8 @@ public class Interactable : MonoBehaviour
     public Vector3 closePosition;
     public Vector3 openRotation;
     public Vector3 closeRotation;
+
+    public CinemachineVirtualCamera cinVCam;
 
 
     public void Start()
@@ -38,6 +42,11 @@ public class Interactable : MonoBehaviour
     }
     public void Interact()
     {
+
+        if (cutscene)
+        {
+            gameManager.StartInGameCutsceneSimple(cinVCam);
+        }
         if (pickup)
         {           
             gameManager.PickupItem(interactMessage);

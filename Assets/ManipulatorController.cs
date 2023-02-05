@@ -16,7 +16,7 @@ public class ManipulatorController : MonoBehaviour
                 interactable.canInteract = true;
                 gameManager.currentInteractable = interactable;
 
-                if (interactable.pickup || interactable.openClose || interactable.openCloseRotate)
+                if (interactable.pickup || interactable.openClose || interactable.openCloseRotate || interactable.cutscene)
                 {
                     gameManager.crosshair.sprite = gameManager.crosshairHand;
                     gameManager.crosshair.transform.DOScale(Vector3.one * 0.7f, 0.2f);

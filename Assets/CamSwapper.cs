@@ -26,6 +26,18 @@ public class CamSwapper : MonoBehaviour
         playerCineCam.Priority = 0;
     }
 
+    public void SwapToDesignatedCam(CinemachineVirtualCamera vCam)
+    {
+        playerControllerCam.enabled = false;
+        cinemachineMasterCam.enabled = true;
+        vCam.Priority = 10;
+        stationaryCineCam3.Priority = 0;
+        stationaryCineCam2.Priority = 0;
+        stationaryCineCam1.Priority = 0;
+        playerCineCam.Priority = 0;
+
+    }
+
     public void SwapToMainMenuCam()
     {
         pauseCam.Priority = 10;
