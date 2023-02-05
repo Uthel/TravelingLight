@@ -31,8 +31,11 @@ public class GameManager : MonoBehaviour
     public CamSwapper camSwapper;
     public UIManager uiManager;
 
-    public GameObject martinModelMain;
+    public SkinnedMeshRenderer martinSkin;
+    public GameObject eyes;
+    public GameObject glasses;
     public GameObject martinModelCutscene;
+    public Animator martinCutsceneAnim;
     public GameObject manipulator;
 
     private void Update()
@@ -61,9 +64,10 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void StartInGameCutsceneSimple(CinemachineVirtualCamera vCam, Transform martinTransform)
+    public void StartInGameCutsceneSimple(CinemachineVirtualCamera vCam, Transform martinTransform, AnimationClip martinAnim, float duration)
     {
         uiManager.isPaused = true;
+        
         DOTween.Sequence()
             .Append(blackoutGroup.DOFade(1, 0.3f))
             .AppendCallback(() => 
@@ -72,12 +76,12 @@ public class GameManager : MonoBehaviour
             })
             .AppendCallback(() =>
             {
-                SwapCutsceneStuff(martinTransform);
+                SwapCutsceneStuff(martinTransform, martinAnim);
             })
             .AppendInterval(0.1f)
 
             .Append(blackoutGroup.DOFade(0, 0.3f))
-            .AppendInterval(5)
+            .AppendInterval(duration)
             .AppendCallback(() =>
             {
                 EndInGameCutScene();
@@ -85,14 +89,16 @@ public class GameManager : MonoBehaviour
             ;
     }
 
-    void SwapCutsceneStuff(Transform martinTransform)
+    void SwapCutsceneStuff(Transform martinTransform, AnimationClip martinAnim)
     {
         crosshair.enabled = false;
-        martinModelMain.SetActive(false);
+        martinSkin.enabled = false;
+        glasses.SetActive(false);
         martinModelCutscene.transform.position = martinTransform.position;
         martinModelCutscene.transform.rotation = martinTransform.rotation;
         martinModelCutscene.SetActive(true);
         manipulator.SetActive(false);
+        martinCutsceneAnim.Play(martinAnim.name);
     }
 
     public void EndInGameCutScene()
@@ -103,7 +109,8 @@ public class GameManager : MonoBehaviour
             .AppendCallback(() => {
                 camSwapper.SwapToPlayerCam();
                 crosshair.enabled = true;
-                martinModelMain.SetActive(true);
+                martinSkin.enabled = true;
+                glasses.SetActive(true);
                 martinModelCutscene.SetActive(false);
                 manipulator.SetActive(true);
             })
