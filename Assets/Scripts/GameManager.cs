@@ -32,11 +32,11 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
 
     public SkinnedMeshRenderer martinSkin;
-    public GameObject eyes;
     public GameObject glasses;
     public GameObject martinModelCutscene;
     public Animator martinCutsceneAnim;
     public GameObject manipulator;
+    public MyCharacterController charControl;
 
     private void Update()
     {
@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
 
     public void PickupItem(string message)
     {
-        //DOTween.KillAll();
         manipulatorAnim.Play("manipinout");
         playerAnim.SetTrigger("Grab");
         grabControl.Grab(currentInteractable.transform);
@@ -67,7 +66,9 @@ public class GameManager : MonoBehaviour
     public void StartInGameCutsceneSimple(CinemachineVirtualCamera vCam, Transform martinTransform, AnimationClip martinAnim, float duration)
     {
         uiManager.isPaused = true;
-        
+        manipulator.SetActive(false);
+        charControl.MaxStableMoveSpeed = 0;
+
         DOTween.Sequence()
             .Append(blackoutGroup.DOFade(1, 0.3f))
             .AppendCallback(() => 
@@ -97,7 +98,6 @@ public class GameManager : MonoBehaviour
         martinModelCutscene.transform.position = martinTransform.position;
         martinModelCutscene.transform.rotation = martinTransform.rotation;
         martinModelCutscene.SetActive(true);
-        manipulator.SetActive(false);
         martinCutsceneAnim.Play(martinAnim.name);
     }
 
@@ -117,7 +117,11 @@ public class GameManager : MonoBehaviour
             .AppendInterval(0.1f)
 
             .Append(blackoutGroup.DOFade(0, 0.3f))
-            .OnComplete(() => { uiManager.isPaused = false; })
+            .OnComplete(() => 
+            { 
+                uiManager.isPaused = false;
+                charControl.MaxStableMoveSpeed = 5;
+            })
             ;
     }
 
