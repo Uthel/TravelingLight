@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
         cutsceneMartinSkin.enabled = true;
 
         martinCutsceneAnim.Play(martinAnim.name);
-        if (secondaryAnimator != null)
+        if (secondaryAnimation != null)
         {
             secondaryAnimator.Play(secondaryAnimation.name);
         }

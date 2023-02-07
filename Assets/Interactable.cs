@@ -12,6 +12,8 @@ public class Interactable : MonoBehaviour
     public bool openClose;
     public bool openCloseRotate;
     public bool cutscene;
+    public bool alternateInteractionPossible = false;
+    public GameObject requiredInventoryItemForAlternateInteraction;
     public BoxCollider hiddenItemCollider;
     public string interactMessage;
     public bool canInteract = false;
@@ -33,6 +35,9 @@ public class Interactable : MonoBehaviour
     public AnimationClip secondaryAnimation;
     public float cutsceneDuration;
 
+    public AnimationClip alternateCutsceneMartinAnimationClip;
+    public AnimationClip alternateSecondaryAnimationClip;
+
 
     public void Start()
     {
@@ -50,6 +55,14 @@ public class Interactable : MonoBehaviour
 
         if (cutscene)
         {
+            if (alternateInteractionPossible)
+            {
+                if (requiredInventoryItemForAlternateInteraction.activeInHierarchy)
+                {
+                    cutsceneMartinAnim = alternateCutsceneMartinAnimationClip;
+                    secondaryAnimation = alternateSecondaryAnimationClip;
+                }
+            }
             gameManager.StartInGameCutsceneSimple(cinVCam, martinTransform, cutsceneMartinAnim, secondaryAnimator, secondaryAnimation, cutsceneDuration);
         }
         if (pickup)
