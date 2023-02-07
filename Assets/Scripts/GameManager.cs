@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
 
     public SkinnedMeshRenderer martinSkin;
+    public SkinnedMeshRenderer cutsceneMartinSkin;
+    public GameObject cutsceneGlasses;
     public GameObject glasses;
     public GameObject martinModelCutscene;
     public Animator martinCutsceneAnim;
@@ -48,22 +50,22 @@ public class GameManager : MonoBehaviour
     {
         manipulatorAnim.Play("manipinout");
         playerAnim.SetTrigger("Grab");
-        grabControl.Grab(currentInteractable.transform);
-        gameMessageTMPro.text = message;
+        //grabControl.Grab(currentInteractable.transform);
+        //gameMessageTMPro.text = message;
         crosshair.sprite = crosshairMain;
         crosshair.transform.DOScale(Vector3.one * 0.1f, 0.2f);
         currentInteractable = null;
-        DOTween.Sequence()
-            .Append(gameMessageGroup.DOFade(1, 0.3f))
-            .Join(gameMessageGroup.transform.DOScale(Vector3.one * 1.3f, 0.3f).SetEase(Ease.OutBounce))
-            .AppendInterval(2)
-            .Append(gameMessageGroup.DOFade(0, 0.5f))
-            .Join(gameMessageGroup.transform.DOScale(Vector3.one, 0.5f))
-            ;
+        //DOTween.Sequence()
+        //    .Append(gameMessageGroup.DOFade(1, 0.3f))
+        //    .Join(gameMessageGroup.transform.DOScale(Vector3.one * 1.3f, 0.3f).SetEase(Ease.OutBounce))
+        //    .AppendInterval(2)
+        //    .Append(gameMessageGroup.DOFade(0, 0.5f))
+        //    .Join(gameMessageGroup.transform.DOScale(Vector3.one, 0.5f))
+        //    ;
 
     }
 
-    public void StartInGameCutsceneSimple(CinemachineVirtualCamera vCam, Transform martinTransform, AnimationClip martinAnim, float duration)
+    public void StartInGameCutsceneSimple(CinemachineVirtualCamera vCam, Transform martinTransform, AnimationClip martinAnim, Animator secondaryAnimator, AnimationClip secondaryAnimation, float duration)
     {
         uiManager.isPaused = true;
         manipulator.SetActive(false);
@@ -77,7 +79,7 @@ public class GameManager : MonoBehaviour
             })
             .AppendCallback(() =>
             {
-                SwapCutsceneStuff(martinTransform, martinAnim);
+                SwapCutsceneStuff(martinTransform, martinAnim, secondaryAnimator, secondaryAnimation);
             })
             .AppendInterval(0.1f)
 
@@ -90,15 +92,21 @@ public class GameManager : MonoBehaviour
             ;
     }
 
-    void SwapCutsceneStuff(Transform martinTransform, AnimationClip martinAnim)
+    void SwapCutsceneStuff(Transform martinTransform, AnimationClip martinAnim, Animator secondaryAnimator, AnimationClip secondaryAnimation)
     {
         crosshair.enabled = false;
         martinSkin.enabled = false;
         glasses.SetActive(false);
+        cutsceneGlasses.SetActive(true);
         martinModelCutscene.transform.position = martinTransform.position;
         martinModelCutscene.transform.rotation = martinTransform.rotation;
-        martinModelCutscene.SetActive(true);
+        cutsceneMartinSkin.enabled = true;
+
         martinCutsceneAnim.Play(martinAnim.name);
+        if (secondaryAnimator != null)
+        {
+            secondaryAnimator.Play(secondaryAnimation.name);
+        }
     }
 
     public void EndInGameCutScene()
@@ -110,8 +118,9 @@ public class GameManager : MonoBehaviour
                 camSwapper.SwapToPlayerCam();
                 crosshair.enabled = true;
                 martinSkin.enabled = true;
+                cutsceneGlasses.SetActive(false);
                 glasses.SetActive(true);
-                martinModelCutscene.SetActive(false);
+                cutsceneMartinSkin.enabled = false;
                 manipulator.SetActive(true);
             })
             .AppendInterval(0.1f)

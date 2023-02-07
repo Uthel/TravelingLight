@@ -29,6 +29,8 @@ public class Interactable : MonoBehaviour
     public CinemachineVirtualCamera cinVCam;
     public Transform martinTransform;
     public AnimationClip cutsceneMartinAnim;
+    public Animator secondaryAnimator;
+    public AnimationClip secondaryAnimation;
     public float cutsceneDuration;
 
 
@@ -48,7 +50,7 @@ public class Interactable : MonoBehaviour
 
         if (cutscene)
         {
-            gameManager.StartInGameCutsceneSimple(cinVCam, martinTransform, cutsceneMartinAnim, cutsceneDuration);
+            gameManager.StartInGameCutsceneSimple(cinVCam, martinTransform, cutsceneMartinAnim, secondaryAnimator, secondaryAnimation, cutsceneDuration);
         }
         if (pickup)
         {           
